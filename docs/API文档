@@ -1,0 +1,720 @@
+## 📋 目录
+
+1. [概述](#概述)
+2. [数据预处理模块](#数据预处理模块)
+3. [特征工程模块](#特征工程模块)
+4. [模型开发模块](#模型开发模块)
+5. [模型评估模块](#模型评估模块)
+6. [报告生成模块](#报告生成模块)
+7. [使用示例](#使用示例)
+
+## 🎯 概述
+
+本文档详细介绍了中小企业信贷风险评估系统各个模块的API接口，包括类定义、方法说明、参数描述和返回值说明。
+
+### 模块架构
+
+```
+系统架构
+├── data_preprocessing.py      # 数据预处理模块
+├── feature_engineering.py    # 特征工程模块
+├── model_development.py      # 模型开发模块
+├── model_evaluation.py       # 模型评估模块
+└── report_generator.py       # 报告生成模块
+```
+
+## 📊 数据预处理模块
+
+### AdvancedDataPreprocessor
+
+高级数据预处理器，提供多维度数据源整合和智能数据清洗功能。
+
+#### 类初始化
+
+```python
+class AdvancedDataPreprocessor:
+    def __init__(self, config=None)
+```
+
+**参数:**
+
+- `config` (dict, optional): 配置参数字典
+
+#### 主要方法
+
+##### load_data()
+
+```python
+def load_data(self, file_path, data_type='auto')
+```
+
+加载数据文件。
+
+**参数:**
+
+- `file_path` (str): 数据文件路径
+- `data_type` (str): 数据类型，支持 'csv', 'excel', 'auto'
+
+**返回值:**
+
+- `pandas.DataFrame`: 加载的数据
+
+**示例:**
+
+```python
+preprocessor = AdvancedDataPreprocessor()
+data = preprocessor.load_data('data.csv')
+```
+
+##### clean_data()
+
+```python
+def clean_data(self, data, remove_duplicates=True, handle_outliers=True)
+```
+
+数据清洗。
+
+**参数:**
+
+- `data` (pandas.DataFrame): 输入数据
+- `remove_duplicates` (bool): 是否移除重复值
+- `handle_outliers` (bool): 是否处理异常值
+
+**返回值:**
+
+- `pandas.DataFrame`: 清洗后的数据
+
+##### handle_missing_values()
+
+```python
+def handle_missing_values(self, data, strategy='auto')
+```
+
+处理缺失值。
+
+**参数:**
+
+- `data` (pandas.DataFrame): 输入数据
+- `strategy` (str): 处理策略，支持 'auto', 'drop', 'fill', 'interpolate'
+
+**返回值:**
+
+- `pandas.DataFrame`: 处理后的数据
+
+##### encode_categorical()
+
+```python
+def encode_categorical(self, data, encoding_type='auto')
+```
+
+分类变量编码。
+
+**参数:**
+
+- `data` (pandas.DataFrame): 输入数据
+- `encoding_type` (str): 编码类型，支持 'auto', 'label', 'onehot', 'target'
+
+**返回值:**
+
+- `pandas.DataFrame`: 编码后的数据
+
+## 🔧 特征工程模块
+
+### AdvancedFeatureEngineer
+
+高级特征工程器，提供自动化特征生成和选择功能。
+
+#### 类初始化
+
+```python
+class AdvancedFeatureEngineer:
+    def __init__(self, config=None)
+```
+
+#### 主要方法
+
+##### generate_features()
+
+```python
+def generate_features(self, data, target_column=None, feature_types='all')
+```
+
+自动生成特征。
+
+**参数:**
+
+- `data` (pandas.DataFrame): 输入数据
+- `target_column` (str, optional): 目标变量列名
+- `feature_types` (str or list): 特征类型，支持 'all', 'mathematical', 'statistical', 'interaction'
+
+**返回值:**
+
+- `pandas.DataFrame`: 生成特征后的数据
+
+##### select_features()
+
+```python
+def select_features(self, data, target_column, method='auto', k=10)
+```
+
+特征选择。
+
+**参数:**
+
+- `data` (pandas.DataFrame): 输入数据
+- `target_column` (str): 目标变量列名
+- `method` (str): 选择方法，支持 'auto', 'variance', 'correlation', 'mutual_info', 'rfe'
+- `k` (int): 选择的特征数量
+
+**返回值:**
+
+- `pandas.DataFrame`: 选择后的数据
+- `list`: 选择的特征列表
+
+##### transform_features()
+
+```python
+def transform_features(self, data, transformations='auto')
+```
+
+特征转换。
+
+**参数:**
+
+- `data` (pandas.DataFrame): 输入数据
+- `transformations` (str or list): 转换类型
+
+**返回值:**
+
+- `pandas.DataFrame`: 转换后的数据
+
+##### calculate_feature_importance()
+
+```python
+def calculate_feature_importance(self, data, target_column, method='random_forest')
+```
+
+计算特征重要性。
+
+**参数:**
+
+- `data` (pandas.DataFrame): 输入数据
+- `target_column` (str): 目标变量列名
+- `method` (str): 计算方法
+
+**返回值:**
+
+- `dict`: 特征重要性字典
+
+## 🤖 模型开发模块
+
+### AdvancedModelDeveloper
+
+高级模型开发器，支持多种机器学习算法和自动化调优。
+
+#### 类初始化
+
+```python
+class AdvancedModelDeveloper:
+    def __init__(self, config=None)
+```
+
+#### 主要方法
+
+##### train_model()
+
+```python
+def train_model(self, X_train, y_train, algorithm='auto', hyperparameter_tuning=True)
+```
+
+训练模型。
+
+**参数:**
+
+- `X_train` (pandas.DataFrame or numpy.array): 训练特征
+- `y_train` (pandas.Series or numpy.array): 训练标签
+- `algorithm` (str): 算法类型，支持 'auto', 'random_forest', 'logistic_regression', 'svm', 'gradient_boosting', 'neural_network'
+- `hyperparameter_tuning` (bool): 是否进行超参数调优
+
+**返回值:**
+
+- `sklearn.base.BaseEstimator`: 训练好的模型
+
+##### predict()
+
+```python
+def predict(self, model, X_test)
+```
+
+模型预测。
+
+**参数:**
+
+- `model`: 训练好的模型
+- `X_test` (pandas.DataFrame or numpy.array): 测试特征
+
+**返回值:**
+
+- `numpy.array`: 预测结果
+
+##### predict_proba()
+
+```python
+def predict_proba(self, model, X_test)
+```
+
+预测概率。
+
+**参数:**
+
+- `model`: 训练好的模型
+- `X_test` (pandas.DataFrame or numpy.array): 测试特征
+
+**返回值:**
+
+- `numpy.array`: 预测概率
+
+##### tune_hyperparameters()
+
+```python
+def tune_hyperparameters(self, X_train, y_train, algorithm, method='optuna', n_trials=100)
+```
+
+超参数调优。
+
+**参数:**
+
+- `X_train`: 训练特征
+- `y_train`: 训练标签
+- `algorithm` (str): 算法类型
+- `method` (str): 调优方法，支持 'optuna', 'grid_search', 'random_search'
+- `n_trials` (int): 试验次数
+
+**返回值:**
+
+- `dict`: 最佳参数
+
+##### save_model()
+
+```python
+def save_model(self, model, file_path)
+```
+
+保存模型。
+
+**参数:**
+
+- `model`: 要保存的模型
+- `file_path` (str): 保存路径
+
+##### load_model()
+
+```python
+def load_model(self, file_path)
+```
+
+加载模型。
+
+**参数:**
+
+- `file_path` (str): 模型文件路径
+
+**返回值:**
+
+- 加载的模型
+
+## 📈 模型评估模块
+
+### ComprehensiveModelEvaluator
+
+全面的模型评估器，提供多维度性能评估和可视化分析。
+
+#### 类初始化
+
+```python
+class ComprehensiveModelEvaluator:
+    def __init__(self, config=None)
+```
+
+#### 主要方法
+
+##### evaluate_model()
+
+```python
+def evaluate_model(self, model, X_test, y_test, model_name='Model')
+```
+
+评估模型性能。
+
+**参数:**
+
+- `model`: 要评估的模型
+- `X_test`: 测试特征
+- `y_test`: 测试标签
+- `model_name` (str): 模型名称
+
+**返回值:**
+
+- `dict`: 评估结果字典
+
+##### calculate_metrics()
+
+```python
+def calculate_metrics(self, y_true, y_pred, y_pred_proba=None)
+```
+
+计算评估指标。
+
+**参数:**
+
+- `y_true`: 真实标签
+- `y_pred`: 预测标签
+- `y_pred_proba`: 预测概率
+
+**返回值:**
+
+- `dict`: 指标字典
+
+##### plot_confusion_matrix()
+
+```python
+def plot_confusion_matrix(self, y_true, y_pred, title='Confusion Matrix')
+```
+
+绘制混淆矩阵。
+
+**参数:**
+
+- `y_true`: 真实标签
+- `y_pred`: 预测标签
+- `title` (str): 图表标题
+
+**返回值:**
+
+- `matplotlib.figure.Figure`: 图表对象
+
+##### plot_roc_curve()
+
+```python
+def plot_roc_curve(self, y_true, y_pred_proba, title='ROC Curve')
+```
+
+绘制ROC曲线。
+
+**参数:**
+
+- `y_true`: 真实标签
+- `y_pred_proba`: 预测概率
+- `title` (str): 图表标题
+
+**返回值:**
+
+- `matplotlib.figure.Figure`: 图表对象
+
+##### plot_feature_importance()
+
+```python
+def plot_feature_importance(self, model, feature_names, title='Feature Importance')
+```
+
+绘制特征重要性图。
+
+**参数:**
+
+- `model`: 模型对象
+- `feature_names` (list): 特征名称列表
+- `title` (str): 图表标题
+
+**返回值:**
+
+- `matplotlib.figure.Figure`: 图表对象
+
+##### generate_evaluation_report()
+
+```python
+def generate_evaluation_report(self, evaluation_results, output_path='evaluation_report.html')
+```
+
+生成评估报告。
+
+**参数:**
+
+- `evaluation_results` (dict): 评估结果
+- `output_path` (str): 输出路径
+
+**返回值:**
+
+- `str`: 报告文件路径
+
+## 📋 报告生成模块
+
+### IntelligentReportGenerator
+
+智能报告生成器，自动生成各类分析报告。
+
+#### 类初始化
+
+```python
+class IntelligentReportGenerator:
+    def __init__(self, config=None)
+```
+
+#### 主要方法
+
+##### generate_data_analysis_report()
+
+```python
+def generate_data_analysis_report(self, data, target_column=None, report_name='数据分析报告')
+```
+
+生成数据分析报告。
+
+**参数:**
+
+- `data` (pandas.DataFrame): 数据
+- `target_column` (str, optional): 目标变量
+- `report_name` (str): 报告名称
+
+**返回值:**
+
+- `str`: 报告文件路径
+
+##### generate_model_evaluation_report()
+
+```python
+def generate_model_evaluation_report(self, model_results, model_name='Model', report_name='模型评估报告')
+```
+
+生成模型评估报告。
+
+**参数:**
+
+- `model_results` (dict): 模型结果
+- `model_name` (str): 模型名称
+- `report_name` (str): 报告名称
+
+**返回值:**
+
+- `str`: 报告文件路径
+
+##### generate_risk_assessment_report()
+
+```python
+def generate_risk_assessment_report(self, risk_data, report_name='风险评估报告')
+```
+
+生成风险评估报告。
+
+**参数:**
+
+- `risk_data` (dict): 风险数据
+- `report_name` (str): 报告名称
+
+**返回值:**
+
+- `str`: 报告文件路径
+
+##### generate_business_summary_report()
+
+```python
+def generate_business_summary_report(self, business_data, report_name='业务总结报告')
+```
+
+生成业务总结报告。
+
+**参数:**
+
+- `business_data` (dict): 业务数据
+- `report_name` (str): 报告名称
+
+**返回值:**
+
+- `str`: 报告文件路径
+
+## 💡 使用示例
+
+### 完整工作流程示例
+
+```python
+import pandas as pd
+from 处理脚本.data_preprocessing import AdvancedDataPreprocessor
+from 处理脚本.feature_engineering import AdvancedFeatureEngineer
+from 处理脚本.model_development import AdvancedModelDeveloper
+from 处理脚本.model_evaluation import ComprehensiveModelEvaluator
+from 处理脚本.report_generator import IntelligentReportGenerator
+
+# 1. 数据预处理
+preprocessor = AdvancedDataPreprocessor()
+data = preprocessor.load_data('credit_data.csv')
+data_cleaned = preprocessor.clean_data(data)
+data_processed = preprocessor.handle_missing_values(data_cleaned)
+data_encoded = preprocessor.encode_categorical(data_processed)
+
+# 2. 特征工程
+feature_engineer = AdvancedFeatureEngineer()
+data_with_features = feature_engineer.generate_features(data_encoded, target_column='default')
+selected_data, selected_features = feature_engineer.select_features(
+    data_with_features, target_column='default', k=20
+)
+
+# 3. 模型开发
+model_developer = AdvancedModelDeveloper()
+X = selected_data.drop('default', axis=1)
+y = selected_data['default']
+
+# 分割数据
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 训练模型
+model = model_developer.train_model(X_train, y_train, algorithm='random_forest')
+
+# 4. 模型评估
+evaluator = ComprehensiveModelEvaluator()
+evaluation_results = evaluator.evaluate_model(model, X_test, y_test, model_name='RandomForest')
+
+# 5. 生成报告
+report_generator = IntelligentReportGenerator()
+
+# 数据分析报告
+data_report = report_generator.generate_data_analysis_report(
+    data_encoded, target_column='default'
+)
+
+# 模型评估报告
+model_report = report_generator.generate_model_evaluation_report(
+    evaluation_results, model_name='RandomForest'
+)
+
+print(f"数据分析报告: {data_report}")
+print(f"模型评估报告: {model_report}")
+```
+
+### 单独使用模块示例
+
+#### 数据预处理示例
+
+```python
+from 处理脚本.data_preprocessing import AdvancedDataPreprocessor
+
+# 初始化预处理器
+preprocessor = AdvancedDataPreprocessor({
+    'missing_value_threshold': 0.5,
+    'outlier_method': 'iqr',
+    'encoding_strategy': 'auto'
+})
+
+# 加载和处理数据
+data = preprocessor.load_data('data.csv')
+cleaned_data = preprocessor.clean_data(data, remove_duplicates=True)
+processed_data = preprocessor.handle_missing_values(cleaned_data, strategy='auto')
+final_data = preprocessor.encode_categorical(processed_data)
+```
+
+#### 特征工程示例
+
+```python
+from 处理脚本.feature_engineering import AdvancedFeatureEngineer
+
+# 初始化特征工程器
+feature_engineer = AdvancedFeatureEngineer({
+    'feature_selection_method': 'mutual_info',
+    'max_features': 50
+})
+
+# 生成和选择特征
+enhanced_data = feature_engineer.generate_features(
+    data, target_column='target', feature_types=['mathematical', 'statistical']
+)
+
+selected_data, features = feature_engineer.select_features(
+    enhanced_data, target_column='target', method='mutual_info', k=20
+)
+
+# 计算特征重要性
+importance = feature_engineer.calculate_feature_importance(
+    selected_data, target_column='target'
+)
+```
+
+#### 模型开发示例
+
+```python
+from 处理脚本.model_development import AdvancedModelDeveloper
+
+# 初始化模型开发器
+model_developer = AdvancedModelDeveloper({
+    'random_state': 42,
+    'cv_folds': 5
+})
+
+# 训练模型
+model = model_developer.train_model(
+    X_train, y_train, 
+    algorithm='gradient_boosting',
+    hyperparameter_tuning=True
+)
+
+# 预测
+predictions = model_developer.predict(model, X_test)
+probabilities = model_developer.predict_proba(model, X_test)
+
+# 保存模型
+model_developer.save_model(model, 'best_model.pkl')
+```
+
+## 🔧 配置参数
+
+### 全局配置示例
+
+```python
+config = {
+    'data_preprocessing': {
+        'missing_value_threshold': 0.5,
+        'outlier_method': 'iqr',
+        'encoding_strategy': 'auto',
+        'remove_duplicates': True
+    },
+    'feature_engineering': {
+        'max_features': 50,
+        'feature_selection_method': 'mutual_info',
+        'generate_interaction_features': True,
+        'scaling_method': 'standard'
+    },
+    'model_development': {
+        'random_state': 42,
+        'cv_folds': 5,
+        'hyperparameter_tuning': True,
+        'ensemble_methods': ['voting', 'stacking']
+    },
+    'model_evaluation': {
+        'metrics': ['accuracy', 'precision', 'recall', 'f1', 'auc'],
+        'plot_style': 'seaborn',
+        'save_plots': True
+    },
+    'report_generation': {
+        'template_style': 'modern',
+        'include_charts': True,
+        'output_format': 'html'
+    }
+}
+```
+
+## 📝 注意事项
+
+1. **数据格式**: 确保输入数据为pandas DataFrame格式
+2. **内存管理**: 大数据集处理时注意内存使用
+3. **参数验证**: 所有方法都包含参数验证
+4. **异常处理**: 建议使用try-catch处理可能的异常
+5. **版本兼容**: 确保依赖包版本兼容
+
+## 🔄 版本更新
+
+- **v1.0.0**: 初始版本，包含基础功能
+- **v1.1.0**: 增加高级特征工程功能
+- **v1.2.0**: 增加自动化超参数调优
+- **v1.3.0**: 增加智能报告生成功能
+
+---
+
+*本API文档会随着系统更新持续完善，请关注最新版本。*

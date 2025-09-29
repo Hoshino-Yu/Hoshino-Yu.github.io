@@ -1,0 +1,49 @@
+name: Deploy to Streamlit Cloud
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Test imports
+      run: |
+        python -c "import streamlit; print('Streamlit imported successfully')"
+        python -c "from src.core.advanced_data_preprocessor import AdvancedDataPreprocessor; print('Core modules imported successfully')"
+        python -c "import pandas, numpy, sklearn; print('Data science libraries imported successfully')"
+    
+    - name: Validate Streamlit app
+      run: |
+        streamlit --version
+        python -m py_compile streamlit_app.py
+        echo "Streamlit app validation completed"
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Deploy notification
+      run: |
+        echo "Ready for Streamlit Cloud deployment"
+        echo "App URL will be available at: https://share.streamlit.io/[username]/[repo-name]/main/streamlit_app.py"
