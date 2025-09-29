@@ -1,5 +1,14 @@
+# 系统级依赖包 / System-level Dependencies
+# 用于Streamlit Cloud部署 / For Streamlit Cloud Deployment
+
 python3-dev
 build-essential
 libssl-dev
 libffi-dev
 python3-setuptools
+pkg-config
+libcairo2-dev
+libpango1.0-dev
+libgdk-pixbuf2.0-dev
+libffi-dev
+shared-mime-info

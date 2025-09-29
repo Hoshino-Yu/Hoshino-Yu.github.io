@@ -1,39 +1,58 @@
-# 核心依赖
-streamlit==1.29.0
-pandas==2.1.4
-numpy==1.24.3
-scikit-learn==1.3.2
+# 智能信贷风险评估与训练系统依赖包
+# Intelligent Credit Risk Assessment and Training System Dependencies
 
-# 数据可视化
-matplotlib==3.7.2
-seaborn==0.12.2
-plotly==5.17.0
+# 核心框架 / Core Framework
+streamlit>=1.30.0
+pandas>=2.2.0
+numpy>=1.26.0
 
-# 机器学习和优化
-optuna==3.4.0
-xgboost==2.0.2
-lightgbm==4.1.0
-catboost==1.2.2
+# 机器学习 / Machine Learning
+scikit-learn>=1.4.0
+xgboost>=2.0.3
+lightgbm>=4.3.0
+catboost>=1.2.3
 
-# 数据处理
-openpyxl==3.1.2
-xlrd==2.0.1
+# 数据可视化 / Data Visualization
+matplotlib>=3.8.0
+seaborn>=0.13.0
+plotly>=5.18.0
+altair>=5.2.0
 
-# 模型解释性
-shap==0.43.0
-lime==0.2.0.1
+# 超参数优化 / Hyperparameter Optimization
+optuna>=3.5.0
 
-# 统计分析
-scipy==1.11.4
-statsmodels==0.14.0
+# 数据处理 / Data Processing
+openpyxl>=3.1.2
+xlrd>=2.0.1
+xlsxwriter>=3.2.0
 
-# 进度条和日志
-tqdm==4.66.1
+# 模型解释性 / Model Interpretability
+shap>=0.44.0
+lime>=0.2.0.1
 
-# 其他工具
-joblib==1.3.2
-pickle-mixin==1.0.2
+# 统计分析 / Statistical Analysis
+scipy>=1.12.0
+statsmodels>=0.14.1
 
-# 云端部署兼容性
-protobuf==3.20.3
-altair<5
+# 性能监控 / Performance Monitoring
+psutil>=5.9.8
+memory-profiler>=0.61.0
+
+# 报告生成 / Report Generation
+jinja2>=3.1.3
+reportlab>=4.0.9
+
+# 进度条和日志 / Progress and Logging
+tqdm>=4.66.2
+
+# 工具库 / Utilities
+joblib>=1.3.2
+pickle-mixin>=1.0.2
+
+# 开发和测试 / Development and Testing
+pytest>=8.0.0
+black>=24.0.0
+flake8>=7.0.0
+
+# 云端部署兼容性 / Cloud Deployment Compatibility
+protobuf>=4.25.0
